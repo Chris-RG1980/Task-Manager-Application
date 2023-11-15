@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task Manager</title>
-  </head>
-  <body>
-    {% for task in tasks %} <!-- Start a loop over each 'task' in the 'tasks' list -->
-        {{ task.task_name }}<br> <!-- Display the name of the current task -->
-        {{ task.category_name }}<br> <!-- Display the category name of the current task -->
-        {{ task.task_description }}<br>  <!-- Display the description of the current task -->
-        {{ task.is_urgent }}<br> <!-- Display whether the task is marked as urgent or not -->
-        {{ task.due_date}}<br> <!-- Display the due date of the current task -->
-    {% endfor %} <!-- End of the loop -->
-  </body>
-</html>
+{% extends "base.html" %}  <!-- Extends/inherits the structure and content from 'base.html' -->
+
+{% block content %} <!-- Defines a block named 'content' -->
+
+  <h2>I'm extending the base template!</h2>
+
+  {% for task in tasks %} <!-- Start a loop over each 'task' in the 'tasks' list -->
+      {{ task.task_name }}<br> <!-- Display the name of the current task -->
+      {{ task.category_name }}<br> <!-- Display the category name of the current task -->
+      {{ task.task_description }}<br>  <!-- Display the description of the current task -->
+      {{ task.is_urgent }}<br> <!-- Display whether the task is marked as urgent or not -->
+      {{ task.due_date}}<br> <!-- Display the due date of the current task -->
+  {% endfor %} <!-- End of the loop -->
+
+{% endblock %} <!-- End of the 'content' block -->
+
