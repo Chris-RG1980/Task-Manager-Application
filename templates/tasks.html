@@ -2,8 +2,6 @@
 
 {% block content %} <!-- Defines a block named 'content' -->
 
-  <h2>I'm extending the base template!</h2>
-
   {% for task in tasks %} <!-- Start a loop over each 'task' in the 'tasks' list -->
       {{ task.task_name }}<br> <!-- Display the name of the current task -->
       {{ task.category_name }}<br> <!-- Display the category name of the current task -->
