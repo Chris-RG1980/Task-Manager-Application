@@ -58,6 +58,38 @@ def get_tasks():
 @app.route("/register", methods=["GET", "POST"])
 # This function, named register, is executed when the "/register" route is accessed.
 def register():
+    # Check if the request method is POST
+    if request.method == "POST":
+        # Access the MongoDB collection 'users' and search for a document
+        # where the 'username' field matches the username provided in the form
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()}
+        )  # .lower() converts the username to lowercase
+
+        if existing_user:  # Checks if the variable 'existing_user' evaluates to True
+            flash(
+                "Username already exists"
+            )  # If 'existing_user' is True, a message "Username already exists" is flashed (typically used to display temporary messages)
+            return redirect(
+                url_for("register")
+            )  # Redirects the user to the 'register' route/page
+
+        # Create a dictionary named 'register' to store user registration information.
+        register = {
+            # Assign the value of the 'username' key in the dictionary to the lowercase version of the username obtained from the form input.
+            "username": request.form.get("username").lower(),
+            # Assign the value of the 'password' key in the dictionary to a hashed version of the password obtained from the form input using a hashing function (generate_password_hash).
+            "password": generate_password_hash(request.form.get("password")),
+        }
+        # Insert the 'register' dictionary containing user registration information into the 'users' collection in the MongoDB database.
+        mongo.db.users.insert_one(register)
+
+        # Put the user into 'session' cookie
+        # Set the value of the "user" key in the session cookie to the lowercase value of the input received from a form field named "username"
+        session["user"] = request.form.get("username").lower()
+        # Display a message to the user indicating that the registration was successful
+        flash("Registration Successfull")
+
     # This line renders the "register.html" template and returns it as a response.
     return render_template("register.html")
 
