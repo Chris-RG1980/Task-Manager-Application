@@ -18,6 +18,9 @@ from flask_pymongo import PyMongo
 # Imports the 'ObjectId' class from the 'bson.objectid' module, which represents a unique identifier for documents in MongoDB.
 from bson.objectid import ObjectId
 
+# Importing specific functions (generate_password_hash, check_password_hash) from the werkzeug.security module.
+from werkzeug.security import generate_password_hash, check_password_hash
+
 # Checks if a file named 'env.py' exists.
 if os.path.exists("env.py"):
     # If 'env.py' exists, imports the content of 'env.py'.
@@ -49,6 +52,14 @@ def get_tasks():
     return render_template(
         "tasks.html", tasks=tasks
     )  # (task=tasks) 1st task is what the template will use and the second tasks is what was found in the database.
+
+
+# This line creates a route "/register" that listens for both GET and POST requests.
+@app.route("/register", methods=["GET", "POST"])
+# This function, named register, is executed when the "/register" route is accessed.
+def register():
+    # This line renders the "register.html" template and returns it as a response.
+    return render_template("register.html")
 
 
 # Runs the Flask application only if this script is executed directly (not imported).
